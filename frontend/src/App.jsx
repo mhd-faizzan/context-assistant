@@ -9,8 +9,9 @@ export default function App() {
 
   if (!isAuthenticated) {
     return (
-      <div>
+      <div className="login-page">
         <h1>Context Assistant</h1>
+        <p>Your AI assistant that knows who you are</p>
         <button onClick={() => loginWithRedirect()}>Login</button>
       </div>
     )
@@ -18,10 +19,10 @@ export default function App() {
 
   return (
     <div>
-      <h1>Hey, {user.name} 👋</h1>
-      <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+      <button className="logout" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
         Logout
       </button>
+      <h1>Hey, {user.name} 👋</h1>
       <Profile />
       <Chat />
     </div>
