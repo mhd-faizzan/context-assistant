@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react"
 import axios from "axios"
 
 export default function Profile() {
-  const { getAccessTokenSilently } = useAuth0()
+  const { getAccessTokenSilently, user } = useAuth0()
   const [profile, setProfile] = useState(null)
   const [error, setError] = useState(null)
 
@@ -22,13 +22,16 @@ export default function Profile() {
     fetchProfile()
   }, [])
 
+  const name = profile?.name || user?.name
+  const email = profile?.email || user?.email
+
   if (error) return <p style={{ color: "#ef4444" }}>{error}</p>
   if (!profile) return <p>Loading profile...</p>
 
   return (
     <div className="profile">
-      <p>Name: <span>{profile.name}</span></p>
-      <p>Email: <span>{profile.email}</span></p>
+      <p>Name: <span>{name}</span></p>
+      <p>Email: <span>{email}</span></p>
     </div>
   )
 }
