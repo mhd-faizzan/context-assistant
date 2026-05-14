@@ -1,0 +1,23 @@
+# env
+.env
+.env.local
+
+# python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+
+# uv
+.python-version
+
+# node
+node_modules/
+dist/
+
+# system
+.DS_Store
+
+# ide
+.vscode/
+.idea/
