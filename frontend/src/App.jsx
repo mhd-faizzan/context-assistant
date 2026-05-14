@@ -1,4 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react"
+import Profile from "./components/Profile"
+import Chat from "./components/Chat"
 
 export default function App() {
   const { isLoading, isAuthenticated, loginWithRedirect, logout, user } = useAuth0()
@@ -20,6 +22,8 @@ export default function App() {
       <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
         Logout
       </button>
+      <Profile />
+      <Chat />
     </div>
   )
 }
