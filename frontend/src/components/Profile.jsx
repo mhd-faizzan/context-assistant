@@ -5,18 +5,24 @@ import axios from "axios"
 export default function Profile() {
   const { getAccessTokenSilently } = useAuth0()
   const [profile, setProfile] = useState(null)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const token = await getAccessTokenSilently()
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/profile`, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      setProfile(res.data)
+      try {
+        const token = await getAccessTokenSilently()
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/profile`, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        setProfile(res.data)
+      } catch (err) {
+        setError("Could not load profile")
+      }
     }
     fetchProfile()
   }, [])
 
+  if (error) return <p style={{ color: "#ef4444" }}>{error}</p>
   if (!profile) return <p>Loading profile...</p>
 
   return (
