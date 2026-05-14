@@ -22,28 +22,30 @@ export default function Chat() {
   }
 
   return (
-    <div>
-      <input
-        placeholder="Ask something..."
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      />
-      <input
-        placeholder="City (optional)"
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-      />
-      <button onClick={sendMessage} disabled={loading}>
-        {loading ? "Thinking..." : "Send"}
-      </button>
+    <div className="chat">
+      <div className="chat-inputs">
+        <input
+          placeholder="Ask something..."
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        <input
+          placeholder="City (optional)"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        />
+        <button onClick={sendMessage} disabled={loading}>
+          {loading ? "Thinking..." : "Send"}
+        </button>
+      </div>
 
       {response && (
-        <div>
+        <div className="response">
           <p>{response.response}</p>
           {response.weather && (
-            <p>
+            <span className="weather-pill">
               {response.weather.city}: {response.weather.temp_c}°C, {response.weather.description}
-            </p>
+            </span>
           )}
         </div>
       )}
