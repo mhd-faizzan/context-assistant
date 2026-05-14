@@ -8,17 +8,25 @@ export default function Chat() {
   const [city, setCity] = useState("")
   const [response, setResponse] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
   const sendMessage = async () => {
+    if (!message.trim()) return
     setLoading(true)
-    const token = await getAccessTokenSilently()
-    const res = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/chat`,
-      { message, city },
-      { headers: { Authorization: `Bearer ${token}` } }
-    )
-    setResponse(res.data)
-    setLoading(false)
+    setError(null)
+    try {
+      const token = await getAccessTokenSilently()
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/chat`,
+        { message, city },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      setResponse(res.data)
+    } catch (err) {
+      setError("Something went wrong. Is the backend running?")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -28,6 +36,7 @@ export default function Chat() {
           placeholder="Ask something..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
         />
         <input
           placeholder="City (optional)"
@@ -38,6 +47,8 @@ export default function Chat() {
           {loading ? "Thinking..." : "Send"}
         </button>
       </div>
+
+      {error && <p style={{ color: "#ef4444", marginTop: "10px" }}>{error}</p>}
 
       {response && (
         <div className="response">
