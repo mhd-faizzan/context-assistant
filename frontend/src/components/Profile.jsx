@@ -20,9 +20,9 @@ export default function Profile() {
   if (!profile) return <p>Loading profile...</p>
 
   return (
-    <div>
-      <p>Name: {profile.name}</p>
-      <p>Email: {profile.email}</p>
+    <div className="profile">
+      <p>Name: <span>{profile.name}</span></p>
+      <p>Email: <span>{profile.email}</span></p>
     </div>
   )
 }
